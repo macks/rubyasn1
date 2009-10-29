@@ -1,0 +1,44 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	ruby setup.rb config --installdirs=std
+	touch configure-stamp
+
+build: build-stamp
+build-stamp: configure-stamp
+	ruby setup.rb setup
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+	ruby setup.rb clean
+	dh_clean 
+
+install: build-stamp
+	dh_testdir
+	dh_testroot
+	dh_clean -k 
+	dh_installdirs
+	ruby setup.rb install --prefix=$(CURDIR)/debian/libasn1-ruby1.8
+
+binary: install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs ChangeLog
+	dh_installdocs
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+.PHONY: build clean binary install configure

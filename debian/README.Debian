@@ -1,0 +1,10 @@
+libasn1-ruby1.8 for Debian
+--------------------------
+
+This module will parse ASN.1 notations and encode Ruby data structures
+using BER (Basic Encoding Rules) and vice versa.
+
+This release is EXPERIMENTAL. Class names and method names woule be
+changed in future release.
+
+ -- MATSUYAMA Kengo <macksx@gmail.com>, Wed, 16 Nov 2005 12:11:32 +0900

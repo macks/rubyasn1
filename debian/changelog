@@ -1,0 +1,21 @@
+libasn1-ruby1.8 (0.3) experimental; urgency=low
+
+  * Release 0.3.
+  * Bug fixed.
+  * Cleaned up code.
+
+ -- macks <macksx@gmail.com>  Thu, 22 Dec 2005 19:51:46 +0900
+
+libasn1-ruby1.8 (0.2) experimental; urgency=low
+
+  * Release 0.2.
+  * Class structure was changed.
+
+ -- macks <macksx@gmail.com>  Sun,  4 Dec 2005 15:09:17 +0900
+
+libasn1-ruby1.8 (0.1) experimental; urgency=low
+
+  * Initial Release.
+
+ -- macks <macksx@gmail.com>  Wed, 16 Nov 2005 12:11:32 +0900
+

@@ -1,0 +1,17 @@
+2005-12-22 19:48:28 +0900  macks
+
+	* Release 0.3
+	* Bug fix.
+	  - decoder: Failed to decode constructor formed string.
+	* Cleaned up code.
+
+2005-12-04 15:05:26 +0900  macks
+
+	* Release 0.2
+	* Change class structures.
+	* Bug fix.
+	  - decoder: explicit tagging was corrupted.
+
+2005-11-16 03:25:40 +0900  macks
+
+	* Initial release.

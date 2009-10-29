@@ -1,0 +1,18 @@
+Source: libasn1-ruby1.8
+Section: interpreters
+Priority: optional
+Maintainer: MATSUYAMA Kengo <macksx@gmail.com>
+Build-Depends: debhelper (>= 4.0.0), racc
+Standards-Version: 3.6.1
+
+Package: libasn1-ruby1.8
+Architecture: all
+Depends: libruby1.8, libracc-runtime-ruby1.8, libstrscan-ruby1.8
+Description: ASN.1 parser and BER encoder/decoder for Ruby.
+ This module will parse ASN.1 notations, encode Ruby data structures
+ using BER (Basic Encoding Rules) and vice versa.
+ .
+ This is EXPERIMENTAL version. Class names and method names would be
+ changed in future version.
+ .
+ This module is based on a porting of Convert::ASN1 module for Perl.

@@ -1,0 +1,9 @@
+TODO
+====
+ * Rakefile
+ * Rdoc
+ * Ruby 1.9
+ * ASN.1 standards
+ * Rewrite parser.
+ * Implement ENUM and ENUMERATED.
+ * Implement constant value.

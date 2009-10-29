@@ -1,0 +1,73 @@
+# $Id: test_06bigint.rb 51 2005-12-01 18:37:07Z mks $
+
+$:.unshift './lib'
+require 'test/unit'
+require 'asn1'
+
+class Asn1Test_BigInt < Test::Unit::TestCase
+
+  def test_bigint
+    assert_not_nil(p = ASN1::Parser.new)
+    assert_not_nil(c = p.parse(' integer INTEGER '))
+
+    num = { :integer => 1092509802939879587398450394850984098031948509 }
+    result = [0x02, 0x13, 0x30, 0xfd, 0x65, 0xc1, 0x01, 0xd9,
+              0xea, 0x2c, 0x94, 0x9e, 0xc5, 0x08, 0x50, 0x4a,
+              0x90, 0x43, 0xdb, 0x52, 0xdd].pack('C*')
+    assert_equal(result, c.encode(num))
+    assert_equal(num, c.decode(result))
+
+    num = { :integer => (1<<17) * (1<<17) }
+    result = [0x2, 0x5, 0x4, 0x0, 0x0, 0x0, 0x0].pack('C*')
+    assert_equal(result, c.encode(num))
+    assert_equal(num, c.decode(result))
+
+    num[:integer] += 10
+    result = [0x2, 0x5, 0x4, 0x0, 0x0, 0x0, 0xa].pack('C*')
+    assert_equal(result, c.encode(num))
+    assert_equal(num, c.decode(result))
+
+    num[:integer] = - num[:integer]
+    result = [0x2, 0x5, 0xfb, 0xff, 0xff, 0xff, 0xf6].pack('C*')
+    assert_equal(result, c.encode(num))
+    assert_equal(num, c.decode(result))
+
+    num[:integer] += 10
+    result = [0x2, 0x5, 0xfc, 0x0, 0x0, 0x0, 0x0].pack('C*')
+    assert_equal(result, c.encode(num))
+    assert_equal(num, c.decode(result))
+
+    num = { :integer => -1092509802939879587398450394850984098031948509 }
+    result = [0x02, 0x13, 0xcf, 0x2,  0x9a, 0x3e, 0xfe, 0x26,
+              0x15, 0xd3, 0x6b, 0x61, 0x3a, 0xf7, 0xaf, 0xb5,
+              0x6f, 0xbc, 0x24, 0xad, 0x23].pack('C*')
+    assert_equal(result, c.encode(num))
+    assert_equal(num, c.decode(result))
+
+    num = { :integer => 1333280603684579469575805266526464216433260889799 }
+    result = [0x02, 0x15, 0x00, 0xe9, 0x8a, 0x5e, 0xb8, 0x3a,
+              0xfa, 0x3d, 0x4,  0x13, 0x7d, 0x19, 0xfc, 0x39,
+              0x36, 0xa3, 0x2b, 0xd2, 0x22, 0x06, 0xc7].pack('C*')
+    assert_equal(result, c.encode(num))
+    assert_equal(num, c.decode(result))
+
+    num = { :integer => -(1<<24) * (1<<24) }
+    result = [0x2, 0x7, 0xff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0].pack('C*')
+    assert_equal(result, c.encode(num))
+    assert_equal(num, c.decode(result))
+
+    {
+      [0x02, 0x04, 0x40, 0x00, 0x00, 0x00].pack('C*')       => 2**30,
+      [0x02, 0x05, 0x00, 0x80, 0x00, 0x00, 0x00].pack('C*') => 2**31,
+      [0x02, 0x05, 0x01, 0x00, 0x00, 0x00, 0x00].pack('C*') => 2**32,
+      [0x02, 0x04, 0xC0, 0x00, 0x00, 0x00].pack('C*')       => -2**30,
+      [0x02, 0x04, 0x80, 0x00, 0x00, 0x00].pack('C*')       => -2**31,
+      [0x02, 0x05, 0xFF, 0x00, 0x00, 0x00, 0x00].pack('C*') => -2**32,
+    }.each do |result, val|
+      num = { :integer => val }
+      assert_equal(result, c.encode(num))
+      assert_equal(num, c.decode(result))
+    end
+  end
+
+end

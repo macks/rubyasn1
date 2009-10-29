@@ -1,0 +1,102 @@
+rubyasn1
+========
+
+This library will parse ASN.1 notations and create converter object which
+encode Ruby data structures using BER (Basic Encoding Rules) and vice versa.
+
+The library is still EXPERIMENTAL and not implemented completely.
+APIs may be changed in future version.
+
+
+Install
+=======
+
+On almost all unix-like systems, type the followings for quick install.
+
+ $ su
+ # ruby setup.rb
+
+If you want to customize install directories, type the following for help.
+
+ $ ruby setup.rb --help
+
+
+How to use
+==========
+
+Example 1:
+
+  parser = ASN1::Parser.new
+  converter = parser.parse(%<
+    seq SEQUENCE {
+      integer INTEGER,
+      bool BOOLEAN,
+      str STRING
+    }
+  >)
+
+  # Encode
+  binary = converter.encode( :seq => {
+    :integer => 1, :bool => false, :str => 'A string'
+  } )
+  p binary
+  #=> "0\020\002\001\001\001\001\000\004\bA string"
+
+  # Decode
+  object = conter.decode(ber_binary)
+  p object
+  #=> {:seq=>{:integer=>1, :bool=>false, :str=>"A string"}}
+
+
+Example 2:
+
+  parser = ASN1::Parser.new
+  converter = parser.parse(%<
+    AddressBook ::= SEQUENCE OF Person
+
+    Person ::= SEQUENCE {
+      name STRING,
+      age INTEGER,
+      email STRING OPTIONAL
+    }
+  >)
+
+  # Check compilation error
+  if converter.nil?
+    puts parser.error
+    puts parser.backtrace
+    abort
+  end
+
+  # Select a type
+  converter.select('AddressBook')
+
+  # Encode
+  binary = converter.encode([
+    { :name => 'Bob',  :age => 24 },
+    { :name => 'John', :age => 18, :email => 'john@example.com' },
+  ])
+  p binary
+  #=> "0'0\b\004\003Bob\002\001\0300\e\004\004John\002\001\022\004\020john@example.com"
+
+  # Decode
+  object = converter.decode(binary)
+  p object
+  #=> [{:age=>24, :name=>"Bob"}, {:age=>18, :email=>"john@example.com", :name=>"John"}]
+
+
+Copyright
+=========
+
+Copyright(C)2005 MATSUYAMA Kengo <macksx@gmail.com>. All rights reserved.
+This module is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This module is based on a porting of Convert::ASN1 module for Perl.
+Convert::ASN1 is copyrighted by Graham Barr.
+For more details, see http://search.cpan.org/~gbarr/Convert-ASN1-0.19/
+
+setup.rb is copyrighted by Minero Aoki.
+For more details, see http://raa.ruby-lang.org/project/setup/
