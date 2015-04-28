@@ -39,7 +39,7 @@ module ASN1
     end
 
     def tag_constructive!
-      if self.tag && self.tag[0] & ASN1::TAG_CONSTRUCTIVE == 0
+      if self.tag && self.tag[0].is_a? Numeric && self.tag[0] & ASN1::TAG_CONSTRUCTIVE == 0
         self.tag[0] |= ASN1::TAG_CONSTRUCTIVE
       end
     end
