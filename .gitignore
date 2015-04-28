@@ -12,3 +12,5 @@
 *.o
 *.a
 mkmf.log
+lib/asn1/parser.rb
+

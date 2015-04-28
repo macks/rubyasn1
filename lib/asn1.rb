@@ -11,7 +11,8 @@ require 'asn1/static_functions'
 require 'asn1/converter'
 require 'asn1/type'
 
-system "racc #{srcdir_root + '/rubyasn1.y'} -o parser.rb" or raise
+current_folder = File.dirname(__FILE__)
+system "racc #{current_folder}/rubyasn1.y -o #{current_folder}/asn1/parser.rb" or raise
 require 'asn1/parser'
 
 require 'asn1/encoder'
