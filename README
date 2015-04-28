@@ -11,14 +11,19 @@ APIs may be changed in future version.
 Install
 =======
 
-On almost all unix-like systems, type the followings for quick install.
+Add this line to your application's Gemfile:
 
- $ su
- # ruby setup.rb
+```ruby
+gem 'rubyasn1'
+```
 
-If you want to customize install directories, type the following for help.
+And then execute:
 
- $ ruby setup.rb --help
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install rubyasn1
 
 
 How to use
@@ -100,3 +105,12 @@ For more details, see http://search.cpan.org/~gbarr/Convert-ASN1-0.19/
 
 setup.rb is copyrighted by Minero Aoki.
 For more details, see http://raa.ruby-lang.org/project/setup/
+
+Contributing
+============
+
+1. Fork it ( https://github.com/macks/rubyasn1/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
